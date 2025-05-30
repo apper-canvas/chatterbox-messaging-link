@@ -16,10 +16,23 @@ const MainFeature = () => {
   const inputRef = useRef(null)
 const [showStickerPicker, setShowStickerPicker] = useState(false)
   const [selectedStickerCategory, setSelectedStickerCategory] = useState('emotions')
+const [showReactionPicker, setShowReactionPicker] = useState(null)
+  const [messageReactions, setMessageReactions] = useState({})
+
+  // Reaction emojis
+  const availableReactions = [
+    { emoji: '👍', name: 'thumbs_up' },
+    { emoji: '❤️', name: 'heart' },
+    { emoji: '😂', name: 'laugh' },
+    { emoji: '😮', name: 'wow' },
+    { emoji: '😢', name: 'sad' },
+    { emoji: '😡', name: 'angry' }
+  ]
 
   // Sticker data
   const stickerCategories = {
-    emotions: {
+emotions: {
+      name: 'Emotions',
       name: 'Emotions',
       icon: 'Smile',
       stickers: [
@@ -28,7 +41,9 @@ const [showStickerPicker, setShowStickerPicker] = useState(false)
         { id: 'love', name: 'Love', url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=100&h=100&fit=crop' },
         { id: 'laugh', name: 'Laugh', url: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=100&h=100&fit=crop' },
         { id: 'angry', name: 'Angry', url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop' },
-        { id: 'surprised', name: 'Surprised', url: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop' }
+        { id: 'surprised', name: 'Surprised', url: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop' },
+        { id: 'excited', name: 'Excited', url: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=100&h=100&fit=crop' },
+        { id: 'cool', name: 'Cool', url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' }
       ]
     },
     animals: {
@@ -40,7 +55,9 @@ const [showStickerPicker, setShowStickerPicker] = useState(false)
         { id: 'panda', name: 'Panda', url: 'https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=100&h=100&fit=crop' },
         { id: 'lion', name: 'Lion', url: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=100&h=100&fit=crop' },
         { id: 'rabbit', name: 'Rabbit', url: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=100&h=100&fit=crop' },
-        { id: 'elephant', name: 'Elephant', url: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=100&h=100&fit=crop' }
+        { id: 'elephant', name: 'Elephant', url: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=100&h=100&fit=crop' },
+        { id: 'monkey', name: 'Monkey', url: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=100&h=100&fit=crop' },
+        { id: 'bear', name: 'Bear', url: 'https://images.unsplash.com/photo-1446824505046-e43605ffb17f?w=100&h=100&fit=crop' }
       ]
     },
     food: {
@@ -52,7 +69,9 @@ const [showStickerPicker, setShowStickerPicker] = useState(false)
         { id: 'coffee', name: 'Coffee', url: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=100&h=100&fit=crop' },
         { id: 'cake', name: 'Cake', url: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' },
         { id: 'apple', name: 'Apple', url: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=100&h=100&fit=crop' },
-        { id: 'icecream', name: 'Ice Cream', url: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=100&h=100&fit=crop' }
+        { id: 'icecream', name: 'Ice Cream', url: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=100&h=100&fit=crop' },
+        { id: 'donut', name: 'Donut', url: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=100&h=100&fit=crop' },
+        { id: 'sushi', name: 'Sushi', url: 'https://images.unsplash.com/photo-1553621042-f6e147245754?w=100&h=100&fit=crop' }
       ]
     },
     actions: {
@@ -64,7 +83,9 @@ const [showStickerPicker, setShowStickerPicker] = useState(false)
         { id: 'wave', name: 'Wave', url: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=100&h=100&fit=crop' },
         { id: 'dance', name: 'Dance', url: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=100&h=100&fit=crop' },
         { id: 'run', name: 'Run', url: 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=100&h=100&fit=crop' },
-        { id: 'sleep', name: 'Sleep', url: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=100&h=100&fit=crop' }
+        { id: 'sleep', name: 'Sleep', url: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=100&h=100&fit=crop' },
+        { id: 'thinking', name: 'Thinking', url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' },
+        { id: 'peace', name: 'Peace', url: 'https://images.unsplash.com/photo-1494790108755-2616b612b5bb?w=100&h=100&fit=crop' }
       ]
     },
     celebrations: {
@@ -76,7 +97,23 @@ const [showStickerPicker, setShowStickerPicker] = useState(false)
         { id: 'fireworks', name: 'Fireworks', url: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=100&h=100&fit=crop' },
         { id: 'birthday', name: 'Birthday', url: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' },
         { id: 'star', name: 'Star', url: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=100&h=100&fit=crop' },
-        { id: 'trophy', name: 'Trophy', url: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=100&h=100&fit=crop' }
+        { id: 'trophy', name: 'Trophy', url: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=100&h=100&fit=crop' },
+        { id: 'confetti', name: 'Confetti', url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=100&h=100&fit=crop' },
+        { id: 'champagne', name: 'Champagne', url: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?w=100&h=100&fit=crop' }
+      ]
+    },
+    nature: {
+      name: 'Nature',
+      icon: 'TreePine',
+      stickers: [
+        { id: 'flower', name: 'Flower', url: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=100&h=100&fit=crop' },
+        { id: 'tree', name: 'Tree', url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=100&h=100&fit=crop' },
+        { id: 'sun', name: 'Sun', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=100&h=100&fit=crop' },
+        { id: 'moon', name: 'Moon', url: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=100&h=100&fit=crop' },
+        { id: 'rainbow', name: 'Rainbow', url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=100&h=100&fit=crop' },
+        { id: 'mountain', name: 'Mountain', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=100&h=100&fit=crop' },
+        { id: 'ocean', name: 'Ocean', url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=100&h=100&fit=crop' },
+        { id: 'butterfly', name: 'Butterfly', url: 'https://images.unsplash.com/photo-1444927714506-8492d94b5ba0?w=100&h=100&fit=crop' }
       ]
     }
   }
@@ -132,6 +169,48 @@ const [showStickerPicker, setShowStickerPicker] = useState(false)
   const getContact = (id) => contacts.find(contact => contact.id === id)
 
   const getConversation = (id) => conversations.find(conv => conv.id === id)
+// Handle message reactions
+  const handleReaction = (messageId, reactionName) => {
+    setMessageReactions(prev => {
+      const messageReacts = prev[messageId] || {}
+      const reactionUsers = messageReacts[reactionName] || []
+      
+      let newReactionUsers
+      if (reactionUsers.includes('me')) {
+        // Remove reaction
+        newReactionUsers = reactionUsers.filter(user => user !== 'me')
+        toast.info('Reaction removed')
+      } else {
+        // Add reaction
+        newReactionUsers = [...reactionUsers, 'me']
+        toast.success('Reaction added!')
+      }
+
+      const newMessageReacts = {
+        ...messageReacts,
+        [reactionName]: newReactionUsers.length > 0 ? newReactionUsers : undefined
+      }
+
+      // Remove empty reaction types
+      Object.keys(newMessageReacts).forEach(key => {
+        if (!newMessageReacts[key] || newMessageReacts[key].length === 0) {
+          delete newMessageReacts[key]
+        }
+      })
+
+      return {
+        ...prev,
+        [messageId]: Object.keys(newMessageReacts).length > 0 ? newMessageReacts : undefined
+      }
+    })
+    
+    setShowReactionPicker(null)
+  }
+
+  // Get reaction for emoji
+  const getReactionByEmoji = (emoji) => {
+    return availableReactions.find(r => r.emoji === emoji)
+  }
 
 const handleSendMessage = (messageContent = null, messageType = 'text') => {
     const content = messageContent || newMessage.trim()
@@ -418,29 +497,86 @@ const handleSendMessage = (messageContent = null, messageType = 'text') => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
->
-                    <div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-w-md`}>
-                      {message.type === 'sticker' ? (
-                        <img 
-                          src={message.content} 
-                          alt="Sticker" 
-                          className="w-24 h-24 object-cover rounded-lg"
-                        />
-                      ) : (
-                        <p className="whitespace-pre-wrap">{message.content}</p>
-                      )}
-                      <p className={`message-timestamp ${message.senderId === 'me' ? 'text-blue-100' : ''}`}>
-                        {format(message.timestamp, 'p')}
-                        {message.senderId === 'me' && (
-                          <ApperIcon 
-                            name={message.isRead ? "CheckCheck" : "Check"} 
-                            className="inline w-3 h-3 ml-1" 
+className="group relative"
+                  >
+                    <div className="flex flex-col items-end space-y-1">
+                      <div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-w-md relative`}>
+                        {message.type === 'sticker' ? (
+                          <img 
+                            src={message.content} 
+                            alt="Sticker" 
+                            className="w-24 h-24 object-cover rounded-lg"
                           />
+                        ) : (
+                          <p className="whitespace-pre-wrap">{message.content}</p>
                         )}
-                      </p>
+                        
+                        {/* Reaction Button */}
+                        <button
+                          onClick={() => setShowReactionPicker(showReactionPicker === message.id ? null : message.id)}
+                          className={`absolute -bottom-2 -right-2 w-6 h-6 bg-surface-100 hover:bg-surface-200 dark:bg-surface-700 dark:hover:bg-surface-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 border border-surface-300 dark:border-surface-600`}
+                        >
+                          <ApperIcon name="Smile" className="w-3 h-3 text-surface-600 dark:text-surface-400" />
+                        </button>
+                        
+                        <p className={`message-timestamp ${message.senderId === 'me' ? 'text-blue-100' : ''}`}>
+                          {format(message.timestamp, 'p')}
+                          {message.senderId === 'me' && (
+                            <ApperIcon 
+                              name={message.isRead ? "CheckCheck" : "Check"} 
+                              className="inline w-3 h-3 ml-1" 
+                            />
+                          )}
+                        </p>
+                      </div>
+                      
+                      {/* Message Reactions */}
+                      {messageReactions[message.id] && Object.keys(messageReactions[message.id]).length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {Object.entries(messageReactions[message.id]).map(([emoji, users]) => (
+                            <motion.button
+                              key={emoji}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              onClick={() => handleReaction(message.id, emoji)}
+                              className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs border transition-all duration-200 ${
+                                users.includes('me') 
+                                  ? 'bg-primary/20 border-primary text-primary' 
+                                  : 'bg-surface-100 dark:bg-surface-700 border-surface-300 dark:border-surface-600 text-surface-600 dark:text-surface-400 hover:bg-surface-200 dark:hover:bg-surface-600'
+                              }`}
+                            >
+                              <span>{emoji}</span>
+                              <span>{users.length}</span>
+                            </motion.button>
+                          ))}
+                        </div>
+                      )}
                     </div>
+                    
+                    {/* Reaction Picker */}
+                    <AnimatePresence>
+                      {showReactionPicker === message.id && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                          className={`absolute ${message.senderId === 'me' ? 'right-0' : 'left-0'} top-full mt-2 bg-white dark:bg-surface-800 rounded-lg shadow-xl border border-surface-200 dark:border-surface-700 p-2 flex space-x-1 z-10`}
+                        >
+                          {availableReactions.map((reaction) => (
+                            <motion.button
+                              key={reaction.name}
+                              whileHover={{ scale: 1.2 }}
+                              whileTap={{ scale: 0.9 }}
+                              onClick={() => handleReaction(message.id, reaction.emoji)}
+                              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors duration-200"
+                            >
+                              <span className="text-lg">{reaction.emoji}</span>
+                            </motion.button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </motion.div>
-                ))}
               </AnimatePresence>
               
               {/* Typing Indicator */}

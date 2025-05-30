@@ -136,3 +136,58 @@
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+/* Reaction animations */
+@keyframes reactionBounce {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.reaction-enter {
+  animation: reactionBounce 0.3s ease-out;
+}
+
+/* Reaction picker animations */
+@keyframes reactionPickerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.reaction-picker-enter {
+  animation: reactionPickerSlideUp 0.2s ease-out;
+}
+
+/* Enhanced message hover effects */
+.message-group:hover .reaction-button {
+  opacity: 1;
+}
+
+.reaction-button {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Sticker category scrollbar */
+.sticker-categories::-webkit-scrollbar {
+  height: 2px;
+}
+
+.sticker-categories::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sticker-categories::-webkit-scrollbar-thumb {
+  background: theme('colors.primary');
+  border-radius: 2px;
+}
