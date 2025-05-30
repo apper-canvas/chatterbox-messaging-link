@@ -418,10 +418,9 @@ const handleSendMessage = (messageContent = null, messageType = 'text') => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className={`flex ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}
-<div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-w-md`}>
-{message.type === 'sticker' ? (
+>
+                    <div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-w-md`}>
+                      {message.type === 'sticker' ? (
                         <img 
                           src={message.content} 
                           alt="Sticker" 
@@ -442,7 +441,6 @@ const handleSendMessage = (messageContent = null, messageType = 'text') => {
                     </div>
                   </motion.div>
                 ))}
-))}
               </AnimatePresence>
               
               {/* Typing Indicator */}
