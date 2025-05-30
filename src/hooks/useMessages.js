@@ -3,13 +3,9 @@ import { toast } from 'react-toastify'
 import { initialMessages, initialConversations } from '../data/mockData'
 
 export const useMessages = () => {
-  const [messages, setMessages] = useState({})
+const [messages, setMessages] = useState(initialMessages)
   const [conversations, setConversations] = useState(initialConversations)
   const [typingUsers, setTypingUsers] = useState([])
-
-  useEffect(() => {
-    setMessages(initialMessages)
-  }, [])
 
   const handleSendMessage = (selectedChat, messageContent, messageType = 'text') => {
     if (!messageContent || !selectedChat) return
