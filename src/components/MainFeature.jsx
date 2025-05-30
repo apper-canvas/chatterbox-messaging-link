@@ -61,7 +61,7 @@ const MainFeature = () => {
   const chatMessages = selectedChat ? messages[selectedChat] || [] : []
 
   return (
-    <div className="h-[calc(100vh-200px)] flex bg-white dark:bg-surface-900 rounded-2xl shadow-2xl overflow-hidden border border-surface-200 dark:border-surface-700">
+<div className="min-h-[600px] max-h-screen flex bg-white dark:bg-surface-900 rounded-2xl shadow-2xl overflow-hidden border border-surface-200 dark:border-surface-700">
       {/* Sidebar */}
       <ConversationList
         conversations={conversations}
