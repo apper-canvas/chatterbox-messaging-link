@@ -32,8 +32,7 @@ const [showReactionPicker, setShowReactionPicker] = useState(null)
   // Sticker data
   const stickerCategories = {
 emotions: {
-      name: 'Emotions',
-      name: 'Emotions',
+name: 'Emotions',
       icon: 'Smile',
       stickers: [
         { id: 'happy', name: 'Happy', url: 'https://images.unsplash.com/photo-1642425149556-b6f90e946859?w=100&h=100&fit=crop' },
@@ -490,17 +489,17 @@ const handleSendMessage = (messageContent = null, messageType = 'text') => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 chat-scroll">
-              <AnimatePresence>
+<AnimatePresence>
                 {chatMessages.map((message, index) => (
                   <motion.div
                     key={message.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-className="group relative"
+                    className="group relative"
                   >
                     <div className="flex flex-col items-end space-y-1">
-                      <div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-w-md relative`}>
+                      <div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-md relative`}>
                         {message.type === 'sticker' ? (
                           <img 
                             src={message.content} 
@@ -577,6 +576,7 @@ className="group relative"
                       )}
                     </AnimatePresence>
                   </motion.div>
+                ))}
               </AnimatePresence>
               
               {/* Typing Indicator */}
@@ -601,8 +601,8 @@ className="group relative"
 
             {/* Message Input */}
             <div className="p-4 border-t border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900">
-              <div className="flex items-end space-x-3">
-{/* Sticker Button */}
+<div className="flex items-end space-x-3">
+                {/* Sticker Button */}
                 <button 
                   onClick={() => setShowStickerPicker(!showStickerPicker)}
                   className="p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors duration-200 flex-shrink-0"
