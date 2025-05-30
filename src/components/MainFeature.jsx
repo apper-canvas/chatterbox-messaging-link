@@ -193,7 +193,7 @@ onClick={() => setShowStickerPicker(!showStickerPicker)}
                 transition={{ delay: 0.2 }}
                 className="text-2xl font-bold text-surface-800 dark:text-surface-200 mb-2"
               >
-                Welcome to ChatterBox
+Welcome to Hike
               </motion.h2>
               
               <motion.p
