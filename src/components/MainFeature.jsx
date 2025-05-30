@@ -19,7 +19,7 @@ const MainFeature = () => {
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
 
-  const { messages, conversations, setConversations, typingUsers, handleSendMessage } = useMessages()
+const { messages, conversations, setConversations, typingUsers, handleSendMessage, handleMessageClick } = useMessages()
   const { messageReactions, showReactionPicker, setShowReactionPicker, handleReaction } = useReactions()
   const { 
     showStickerPicker, 
@@ -99,6 +99,7 @@ const MainFeature = () => {
                     onReaction={handleReaction}
                   />
                 ))}
+onMessageClick={handleMessageClick}
               </AnimatePresence>
               
               {/* Typing Indicator */}

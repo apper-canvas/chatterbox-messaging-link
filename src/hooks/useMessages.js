@@ -18,13 +18,11 @@ const [messages, setMessages] = useState(initialMessages)
       type: messageType,
       timestamp: new Date(),
       isRead: false
-    }
-
+}
     setMessages(prev => ({
       ...prev,
       [selectedChat]: [...(prev[selectedChat] || []), newMsg]
-    }))
-
+}))
     // Update conversation with appropriate last message text
     const lastMessageText = messageType === 'sticker' ? 'Sent a sticker' : messageContent
     setConversations(prev => prev.map(conv => 
@@ -32,7 +30,6 @@ const [messages, setMessages] = useState(initialMessages)
         ? { ...conv, lastMessage: lastMessageText, timestamp: new Date() }
         : conv
     ))
-
     if (messageType === 'text') {
       toast.success('Message sent!')
     } else if (messageType === 'sticker') {

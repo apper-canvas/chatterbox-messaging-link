@@ -12,7 +12,43 @@ const MessageBubble = ({
 }) => {
   const isOwnMessage = message.senderId === 'me'
 
-  return (
+const isSentByMe = isOwnMessage
+  const messageStatus = message.status || 'sent'
+  
+  const handleMessageClick = () => {
+    if (isSentByMe && (messageStatus === 'sent' || messageStatus === 'delivered')) {
+      // This would typically be passed from parent component
+      // For now, we'll simulate the status change
+      console.log(`Message ${message.id} clicked, status: ${messageStatus}`)
+    }
+  }
+
+  const getStatusIcon = () => {
+    switch (messageStatus) {
+      case 'sent':
+        return <ApperIcon name="Check" className="w-3 h-3 text-surface-400" />
+      case 'delivered':
+        return <ApperIcon name="CheckCheck" className="w-3 h-3 text-primary" />
+      case 'seen':
+        return <ApperIcon name="CheckCheck" className="w-3 h-3 text-secondary" />
+      default:
+        return null
+    }
+  }
+
+  const getMessageClasses = () => {
+    let classes = 'message-group group relative '
+    if (isSentByMe) {
+      classes += 'message-clickable '
+      if (messageStatus === 'seen') {
+        classes += 'message-seen '
+      } else if (messageStatus === 'delivered') {
+        classes += 'message-delivered '
+      }
+    }
+    return classes
+  }
+return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -21,9 +57,10 @@ const MessageBubble = ({
     >
       <div className="flex flex-col items-end space-y-1">
         <div className={`chat-bubble ${isOwnMessage ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-md relative`}>
-          {message.type === 'sticker' ? (
-            <img 
-              src={message.content} 
+{message.type === 'sticker' ? (
+            <div className={getMessageClasses()} onClick={handleMessageClick}>
+              <img 
+                src={message.content}
               alt="Sticker" 
               className="w-24 h-24 object-cover rounded-lg"
             />
@@ -48,6 +85,18 @@ const MessageBubble = ({
               />
             )}
           </p>
+{/* Message Status for sent messages */}
+          {isSentByMe && (
+            <div className="flex justify-end items-center mt-1 space-x-1">
+              {getStatusIcon()}
+              <span className={`text-xs ${
+                messageStatus === 'seen' ? 'text-secondary' :
+                messageStatus === 'delivered' ? 'text-primary' : 'text-surface-400'
+              }`}>
+                {messageStatus}
+              </span>
+            </div>
+          )}
         </div>
         
         {/* Message Reactions */}

@@ -237,3 +237,33 @@ background: theme('colors.primary.DEFAULT');
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 40;
 }
+/* Message status indicators */
+.message-status-sent {
+  color: theme('colors.surface.400');
+}
+
+.message-status-delivered {
+  color: theme('colors.primary.DEFAULT');
+}
+
+.message-status-seen {
+  color: theme('colors.secondary.DEFAULT');
+}
+
+.message-seen {
+  border-left: 3px solid theme('colors.secondary.DEFAULT');
+}
+
+.message-delivered {
+  border-left: 3px solid theme('colors.primary.DEFAULT');
+}
+
+.message-clickable {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.message-clickable:hover {
+  transform: translateX(2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
