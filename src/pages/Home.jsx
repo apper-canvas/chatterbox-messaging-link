@@ -28,8 +28,8 @@ const Home = () => {
               <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center shadow-lg">
                 <ApperIcon name="MessageCircle" className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
-                ChatterBox
+<h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
+Hike
               </h1>
             </div>
             
