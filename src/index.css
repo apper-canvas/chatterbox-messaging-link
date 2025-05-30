@@ -188,6 +188,6 @@
 }
 
 .sticker-categories::-webkit-scrollbar-thumb {
-  background: theme('colors.primary');
+background: theme('colors.primary.DEFAULT');
   border-radius: 2px;
 }
