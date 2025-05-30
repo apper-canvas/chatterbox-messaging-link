@@ -115,3 +115,24 @@
     max-width: calc(100vw - 120px);
   }
 }
+/* Sticker picker animations */
+@keyframes stickerPickerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sticker-picker-enter {
+  animation: stickerPickerSlideUp 0.2s ease-out;
+}
+
+/* Sticker hover effects */
+.sticker-grid-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

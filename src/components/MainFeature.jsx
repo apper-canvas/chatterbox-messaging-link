@@ -14,6 +14,72 @@ const MainFeature = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+const [showStickerPicker, setShowStickerPicker] = useState(false)
+  const [selectedStickerCategory, setSelectedStickerCategory] = useState('emotions')
+
+  // Sticker data
+  const stickerCategories = {
+    emotions: {
+      name: 'Emotions',
+      icon: 'Smile',
+      stickers: [
+        { id: 'happy', name: 'Happy', url: 'https://images.unsplash.com/photo-1642425149556-b6f90e946859?w=100&h=100&fit=crop' },
+        { id: 'sad', name: 'Sad', url: 'https://images.unsplash.com/photo-1629901925121-8a141c2a42f4?w=100&h=100&fit=crop' },
+        { id: 'love', name: 'Love', url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=100&h=100&fit=crop' },
+        { id: 'laugh', name: 'Laugh', url: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=100&h=100&fit=crop' },
+        { id: 'angry', name: 'Angry', url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100&h=100&fit=crop' },
+        { id: 'surprised', name: 'Surprised', url: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop' }
+      ]
+    },
+    animals: {
+      name: 'Animals',
+      icon: 'Heart',
+      stickers: [
+        { id: 'cat', name: 'Cat', url: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=100&h=100&fit=crop' },
+        { id: 'dog', name: 'Dog', url: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=100&h=100&fit=crop' },
+        { id: 'panda', name: 'Panda', url: 'https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=100&h=100&fit=crop' },
+        { id: 'lion', name: 'Lion', url: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=100&h=100&fit=crop' },
+        { id: 'rabbit', name: 'Rabbit', url: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=100&h=100&fit=crop' },
+        { id: 'elephant', name: 'Elephant', url: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=100&h=100&fit=crop' }
+      ]
+    },
+    food: {
+      name: 'Food',
+      icon: 'Coffee',
+      stickers: [
+        { id: 'pizza', name: 'Pizza', url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=100&h=100&fit=crop' },
+        { id: 'burger', name: 'Burger', url: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop' },
+        { id: 'coffee', name: 'Coffee', url: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=100&h=100&fit=crop' },
+        { id: 'cake', name: 'Cake', url: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' },
+        { id: 'apple', name: 'Apple', url: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=100&h=100&fit=crop' },
+        { id: 'icecream', name: 'Ice Cream', url: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=100&h=100&fit=crop' }
+      ]
+    },
+    actions: {
+      name: 'Actions',
+      icon: 'Zap',
+      stickers: [
+        { id: 'thumbsup', name: 'Thumbs Up', url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop' },
+        { id: 'clap', name: 'Clap', url: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=100&h=100&fit=crop' },
+        { id: 'wave', name: 'Wave', url: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=100&h=100&fit=crop' },
+        { id: 'dance', name: 'Dance', url: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=100&h=100&fit=crop' },
+        { id: 'run', name: 'Run', url: 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=100&h=100&fit=crop' },
+        { id: 'sleep', name: 'Sleep', url: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=100&h=100&fit=crop' }
+      ]
+    },
+    celebrations: {
+      name: 'Celebrations',
+      icon: 'Star',
+      stickers: [
+        { id: 'party', name: 'Party', url: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=100&h=100&fit=crop' },
+        { id: 'gift', name: 'Gift', url: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop' },
+        { id: 'fireworks', name: 'Fireworks', url: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=100&h=100&fit=crop' },
+        { id: 'birthday', name: 'Birthday', url: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' },
+        { id: 'star', name: 'Star', url: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=100&h=100&fit=crop' },
+        { id: 'trophy', name: 'Trophy', url: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=100&h=100&fit=crop' }
+      ]
+    }
+  }
 
   // Mock data
   const [contacts] = useState([
@@ -67,14 +133,16 @@ const MainFeature = () => {
 
   const getConversation = (id) => conversations.find(conv => conv.id === id)
 
-  const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedChat) return
+const handleSendMessage = (messageContent = null, messageType = 'text') => {
+    const content = messageContent || newMessage.trim()
+    if (!content || !selectedChat) return
 
     const messageId = Date.now().toString()
     const newMsg = {
       id: messageId,
       senderId: 'me',
-      content: newMessage.trim(),
+      content: content,
+      type: messageType,
       timestamp: new Date(),
       isRead: false
     }
@@ -84,15 +152,20 @@ const MainFeature = () => {
       [selectedChat]: [...(prev[selectedChat] || []), newMsg]
     }))
 
-    // Update conversation
+    // Update conversation with appropriate last message text
+    const lastMessageText = messageType === 'sticker' ? 'Sent a sticker' : content
     setConversations(prev => prev.map(conv => 
       conv.id === selectedChat 
-        ? { ...conv, lastMessage: newMessage.trim(), timestamp: new Date() }
+        ? { ...conv, lastMessage: lastMessageText, timestamp: new Date() }
         : conv
     ))
 
-    setNewMessage('')
-    toast.success('Message sent!')
+    if (messageType === 'text') {
+      setNewMessage('')
+      toast.success('Message sent!')
+    } else if (messageType === 'sticker') {
+      toast.success('Sticker sent!')
+    }
 
     // Simulate typing indicator and response
     setTimeout(() => {
@@ -115,6 +188,7 @@ const MainFeature = () => {
           id: (Date.now() + 1).toString(),
           senderId: selectedChat,
           content: randomResponse,
+          type: 'text',
           timestamp: new Date(),
           isRead: false
         }
@@ -131,6 +205,11 @@ const MainFeature = () => {
         ))
       }, 2000)
     }, 500)
+  }
+
+  const handleStickerSelect = (sticker) => {
+    handleSendMessage(sticker.url, 'sticker')
+    setShowStickerPicker(false)
   }
 
   const handleKeyPress = (e) => {
@@ -341,9 +420,16 @@ const MainFeature = () => {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
                     className={`flex ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'}`}>
-                      <p className="whitespace-pre-wrap">{message.content}</p>
+<div className={`chat-bubble ${message.senderId === 'me' ? 'chat-bubble-sent' : 'chat-bubble-received'} max-w-xs lg:max-w-md`}>
+{message.type === 'sticker' ? (
+                        <img 
+                          src={message.content} 
+                          alt="Sticker" 
+                          className="w-24 h-24 object-cover rounded-lg"
+                        />
+                      ) : (
+                        <p className="whitespace-pre-wrap">{message.content}</p>
+                      )}
                       <p className={`message-timestamp ${message.senderId === 'me' ? 'text-blue-100' : ''}`}>
                         {format(message.timestamp, 'p')}
                         {message.senderId === 'me' && (
@@ -356,6 +442,7 @@ const MainFeature = () => {
                     </div>
                   </motion.div>
                 ))}
+))}
               </AnimatePresence>
               
               {/* Typing Indicator */}
@@ -381,6 +468,13 @@ const MainFeature = () => {
             {/* Message Input */}
             <div className="p-4 border-t border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900">
               <div className="flex items-end space-x-3">
+{/* Sticker Button */}
+                <button 
+                  onClick={() => setShowStickerPicker(!showStickerPicker)}
+                  className="p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors duration-200 flex-shrink-0"
+                >
+                  <ApperIcon name="Smile" className="w-5 h-5 text-surface-600 dark:text-surface-400" />
+                </button>
                 <button className="p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors duration-200 flex-shrink-0">
                   <ApperIcon name="Paperclip" className="w-5 h-5 text-surface-600 dark:text-surface-400" />
                 </button>
@@ -405,6 +499,67 @@ const MainFeature = () => {
                   <ApperIcon name="Send" className="w-5 h-5" />
                 </button>
               </div>
+{/* Sticker Picker */}
+              <AnimatePresence>
+                {showStickerPicker && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 20, scale: 0.9 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute bottom-full left-0 right-0 mb-2 bg-white dark:bg-surface-800 rounded-lg shadow-xl border border-surface-200 dark:border-surface-700 overflow-hidden"
+                  >
+                    {/* Sticker Categories */}
+                    <div className="flex border-b border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900">
+                      {Object.entries(stickerCategories).map(([categoryId, category]) => (
+                        <button
+                          key={categoryId}
+                          onClick={() => setSelectedStickerCategory(categoryId)}
+                          className={`flex-1 p-3 text-center transition-colors duration-200 ${
+                            selectedStickerCategory === categoryId
+                              ? 'bg-primary text-white'
+                              : 'hover:bg-surface-100 dark:hover:bg-surface-800 text-surface-600 dark:text-surface-400'
+                          }`}
+                        >
+                          <ApperIcon name={category.icon} className="w-5 h-5 mx-auto mb-1" />
+                          <p className="text-xs font-medium">{category.name}</p>
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {/* Sticker Grid */}
+                    <div className="p-4 max-h-60 overflow-y-auto">
+                      <div className="grid grid-cols-4 gap-3">
+                        {stickerCategories[selectedStickerCategory].stickers.map((sticker) => (
+                          <motion.button
+                            key={sticker.id}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => handleStickerSelect(sticker)}
+                            className="aspect-square rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 border border-surface-200 dark:border-surface-700"
+                          >
+                            <img
+                              src={sticker.url}
+                              alt={sticker.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </motion.button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Close Button */}
+                    <div className="p-2 border-t border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900">
+                      <button
+                        onClick={() => setShowStickerPicker(false)}
+                        className="w-full py-2 text-sm text-surface-600 dark:text-surface-400 hover:text-surface-800 dark:hover:text-surface-200 transition-colors duration-200"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </>
         ) : (
