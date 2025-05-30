@@ -125,11 +125,15 @@ const MainFeature = () => {
             <div className="p-4 border-t border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900">
               <div className="flex items-end space-x-3">
                 {/* Sticker Button */}
-                <button 
-                  onClick={() => setShowStickerPicker(!showStickerPicker)}
-                  className="p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors duration-200 flex-shrink-0"
+<button
+onClick={() => setShowStickerPicker(!showStickerPicker)}
+                  className={`p-2 rounded-lg transition-colors duration-200 flex-shrink-0 ${
+                    showStickerPicker 
+                      ? 'bg-primary text-white' 
+                      : 'hover:bg-surface-100 dark:hover:bg-surface-800 text-surface-600 dark:text-surface-400'
+                  }`}
                 >
-                  <ApperIcon name="Smile" className="w-5 h-5 text-surface-600 dark:text-surface-400" />
+                  <ApperIcon name="Smile" className="w-5 h-5" />
                 </button>
                 <button className="p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors duration-200 flex-shrink-0">
                   <ApperIcon name="Paperclip" className="w-5 h-5 text-surface-600 dark:text-surface-400" />
@@ -156,16 +160,18 @@ const MainFeature = () => {
                 </button>
               </div>
 
-              {/* Sticker Picker */}
-              <StickerPicker
-                isVisible={showStickerPicker}
-                onClose={() => setShowStickerPicker(false)}
-                selectedCategory={selectedStickerCategory}
-                onCategoryChange={setSelectedStickerCategory}
-                onStickerSelect={(sticker) => 
-                  handleStickerSelect(sticker, handleSendMessageWrapper)
-                }
-              />
+{/* Sticker Picker Container */}
+              <div className="relative">
+                <StickerPicker
+                  isVisible={showStickerPicker}
+                  onClose={() => setShowStickerPicker(false)}
+                  selectedCategory={selectedStickerCategory}
+                  onCategoryChange={setSelectedStickerCategory}
+                  onStickerSelect={(sticker) => 
+                    handleStickerSelect(sticker, handleSendMessageWrapper)
+                  }
+                />
+              </div>
             </div>
           </>
         ) : (

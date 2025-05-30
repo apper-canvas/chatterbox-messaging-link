@@ -191,3 +191,49 @@
 background: theme('colors.primary.DEFAULT');
   border-radius: 2px;
 }
+/* Sticker picker visibility and positioning */
+.sticker-picker-container {
+  position: relative;
+  z-index: 50;
+}
+
+/* Ensure sticker picker appears above other elements */
+.sticker-picker-modal {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  margin-bottom: 0.5rem;
+  z-index: 50;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Sticker button active state */
+.sticker-button-active {
+  background-color: theme('colors.primary.DEFAULT') !important;
+  color: white !important;
+}
+
+/* Enhanced sticker grid hover effects */
+.sticker-grid-item {
+  transition: all 0.2s ease-in-out;
+}
+
+.sticker-grid-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+/* Backdrop for sticker picker */
+.sticker-picker-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 40;
+}

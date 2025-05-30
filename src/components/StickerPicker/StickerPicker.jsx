@@ -9,16 +9,27 @@ const StickerPicker = ({
   onCategoryChange, 
   onStickerSelect 
 }) => {
-  return (
+return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.9 }}
-          transition={{ duration: 0.2 }}
-          className="absolute bottom-full left-0 right-0 mb-2 bg-white dark:bg-surface-800 rounded-lg shadow-xl border border-surface-200 dark:border-surface-700 overflow-hidden"
-        >
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/20 z-40"
+            onClick={onClose}
+          />
+          
+          {/* Sticker Picker Modal */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+            className="absolute bottom-full left-0 right-0 mb-2 bg-white dark:bg-surface-800 rounded-lg shadow-xl border border-surface-200 dark:border-surface-700 overflow-hidden z-50 max-w-md mx-auto"
+          >
           {/* Sticker Categories */}
           <div className="flex border-b border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900">
             {Object.entries(stickerCategories).map(([categoryId, category]) => (
@@ -68,6 +79,7 @@ const StickerPicker = ({
             </button>
           </div>
         </motion.div>
+</>
       )}
     </AnimatePresence>
   )
